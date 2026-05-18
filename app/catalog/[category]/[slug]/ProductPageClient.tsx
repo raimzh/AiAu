@@ -21,10 +21,19 @@ export default function ProductPageClient({ product, category, related, whatsapp
   const { toggle, has } = useWishlist()
   const wishlisted = has(product.id)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
+  const [sizeWarning, setSizeWarning] = useState(false)
 
   const waMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать:\n*${product.name}*\nАртикул: ${product.id}${selectedSize ? `\nРазмер: ${selectedSize}` : ''}`
   )
+
+  const handleOrder = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (product.sizes.length > 0 && !selectedSize) {
+      e.preventDefault()
+      setSizeWarning(true)
+      setTimeout(() => setSizeWarning(false), 2500)
+    }
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -90,17 +99,20 @@ export default function ProductPageClient({ product, category, related, whatsapp
           {/* Size selector */}
           {product.sizes.length > 0 && (
             <div className="mb-6">
-              <p className="text-sm font-medium text-gray-700 mb-2">
+              <p className={`text-sm font-medium mb-2 transition-colors ${sizeWarning ? 'text-red-500' : 'text-gray-700'}`}>
                 Размер{selectedSize ? `: ${selectedSize}` : ' — выберите'}
+                {sizeWarning && <span className="ml-2 font-normal">← пожалуйста, выберите размер</span>}
               </p>
-              <div className="flex flex-wrap gap-2">
+              <div className={`flex flex-wrap gap-2 ${sizeWarning ? 'animate-pulse' : ''}`}>
                 {product.sizes.map((size) => (
                   <button
                     key={size}
-                    onClick={() => setSelectedSize(size)}
+                    onClick={() => { setSelectedSize(size); setSizeWarning(false) }}
                     className={`px-3 py-1.5 text-sm border rounded transition-colors ${
                       selectedSize === size
                         ? 'border-gold text-gold'
+                        : sizeWarning
+                        ? 'border-red-300 text-red-400 hover:border-gold hover:text-gold'
                         : 'border-gray-200 text-gray-600 hover:border-gold hover:text-gold'
                     }`}
                   >
@@ -118,6 +130,7 @@ export default function ProductPageClient({ product, category, related, whatsapp
                 href={`https://wa.me/${whatsapp}?text=${waMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={handleOrder}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded text-white font-medium transition-opacity hover:opacity-90"
                 style={{ backgroundColor: 'var(--gold)' }}
               >

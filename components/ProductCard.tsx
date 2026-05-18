@@ -32,7 +32,7 @@ export default function ProductCard({ product }: { product: Product }) {
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {product.isNew && <Badge className="bg-gray-900 text-white text-[10px]">Новинка</Badge>}
             {product.isSale && <Badge className="text-white text-[10px]" style={{ backgroundColor: 'var(--gold)' }}>Скидка</Badge>}
-            {!product.inStock && <Badge variant="secondary" className="text-[10px]">Нет в наличии</Badge>}
+            {!product.inStock && <Badge className="text-[10px] bg-white text-gray-600 border border-gray-200">Нет в наличии</Badge>}
           </div>
         </div>
       </Link>
@@ -40,7 +40,7 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* Wishlist button */}
       <button
         onClick={() => toggle(product.id)}
-        className="absolute top-2 right-2 p-1.5 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+        className="absolute top-2 right-2 p-2.5 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
         aria-label={wishlisted ? 'Удалить из избранного' : 'Добавить в избранное'}
       >
         <Heart

@@ -1,6 +1,8 @@
 'use client'
 
 import { useState, useMemo } from 'react'
+import Link from 'next/link'
+import { ChevronRight } from 'lucide-react'
 import ProductCard from '@/components/ProductCard'
 import type { Product, Category } from '@/types'
 
@@ -40,10 +42,27 @@ export default function CatalogClient({ products, categories, initialCategory = 
     return list
   }, [products, category, metal, sort, inStockOnly])
 
+  const currentCategory = category ? categories.find((c) => c.slug === category) : null
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
+      {/* Breadcrumb */}
+      <nav className="flex items-center gap-1 text-xs text-gray-400 mb-4">
+        <Link href="/" className="hover:text-[#C9A84C] transition-colors">Главная</Link>
+        <ChevronRight size={12} />
+        {currentCategory ? (
+          <>
+            <Link href="/catalog" className="hover:text-[#C9A84C] transition-colors">Каталог</Link>
+            <ChevronRight size={12} />
+            <span className="text-gray-600">{currentCategory.name}</span>
+          </>
+        ) : (
+          <span className="text-gray-600">Каталог</span>
+        )}
+      </nav>
+
       <h1 className="text-3xl font-bold text-gray-900 mb-8" style={{ fontFamily: 'Georgia, serif' }}>
-        {category ? categories.find((c) => c.slug === category)?.name ?? 'Каталог' : 'Все украшения'}
+        {currentCategory ? currentCategory.name : 'Все украшения'}
       </h1>
 
       {/* Filters */}
