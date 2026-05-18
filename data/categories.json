@@ -1,0 +1,42 @@
+[
+  {
+    "id": "rings",
+    "name": "Кольца",
+    "slug": "rings",
+    "description": "Обручальные, помолвочные и коктейльные кольца из золота 585 и 750 пробы",
+    "image": "/images/categories/rings.jpg",
+    "count": 4
+  },
+  {
+    "id": "earrings",
+    "name": "Серьги",
+    "slug": "earrings",
+    "description": "Классические и дизайнерские серьги — пусеты, конго, висюльки",
+    "image": "/images/categories/earrings.jpg",
+    "count": 3
+  },
+  {
+    "id": "bracelets",
+    "name": "Браслеты",
+    "slug": "bracelets",
+    "description": "Браслеты из жёлтого и белого золота с бриллиантами и без",
+    "image": "/images/categories/bracelets.jpg",
+    "count": 2
+  },
+  {
+    "id": "necklaces",
+    "name": "Колье и цепи",
+    "slug": "necklaces",
+    "description": "Золотые цепочки, колье и подвески на каждый день и для особых случаев",
+    "image": "/images/categories/necklaces.jpg",
+    "count": 2
+  },
+  {
+    "id": "charms",
+    "name": "Шармы",
+    "slug": "charms",
+    "description": "Золотые шармы и подвески для браслетов и цепочек",
+    "image": "/images/categories/charms.jpg",
+    "count": 1
+  }
+]
