@@ -8,5 +8,5 @@ export const metadata: Metadata = {
 }
 
 export default function CatalogPage() {
-  return <CatalogClient products={products} categories={categories} />
+  return <CatalogClient key="all" products={products} categories={categories} />
 }

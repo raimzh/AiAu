@@ -59,7 +59,7 @@ export default function ProductPageClient({ product, category, related, whatsapp
             src={product.images[0]}
             alt={product.name}
             fill
-            className="object-cover"
+            className="object-contain p-4"
             unoptimized
             onError={(e) => {
               const img = e.target as HTMLImageElement

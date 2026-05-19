@@ -23,5 +23,5 @@ export default async function CategoryPage({ params }: Props) {
   const cat = categories.find((c) => c.slug === category)
   if (!cat) notFound()
 
-  return <CatalogClient products={products} categories={categories} initialCategory={category} />
+  return <CatalogClient key={category} products={products} categories={categories} initialCategory={category} />
 }
