@@ -1,7 +1,8 @@
 'use client'
 
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 import { ChevronRight } from 'lucide-react'
 import ProductCard from '@/components/ProductCard'
 import type { Product, Category } from '@/types'
@@ -26,10 +27,30 @@ interface Props {
 }
 
 export default function CatalogClient({ products, categories, initialCategory = '' }: Props) {
-  const [category, setCategory] = useState(initialCategory)
+  const pathname = usePathname()
+
+  // Читаем категорию из URL — всегда актуально при любой навигации
+  const categoryFromUrl = (() => {
+    const parts = pathname.split('/')
+    // /catalog/rings → parts = ['', 'catalog', 'rings']
+    if (parts.length >= 3 && parts[1] === 'catalog' && parts[2]) {
+      return parts[2]
+    }
+    return ''
+  })()
+
+  const [category, setCategory] = useState(categoryFromUrl || initialCategory)
   const [metal, setMetal] = useState('')
   const [sort, setSort] = useState('default')
   const [inStockOnly, setInStockOnly] = useState(false)
+
+  // Синхронизируем категорию при смене URL (навигация между страницами)
+  useEffect(() => {
+    setCategory(categoryFromUrl || initialCategory)
+    setMetal('')
+    setSort('default')
+    setInStockOnly(false)
+  }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
 
   const filtered = useMemo(() => {
     let list = [...products]
@@ -91,7 +112,6 @@ export default function CatalogClient({ products, categories, initialCategory = 
         </div>
 
         <div className="ml-auto flex items-center gap-3 flex-wrap">
-          {/* Metal filter */}
           <select
             value={metal}
             onChange={(e) => setMetal(e.target.value)}
@@ -102,7 +122,6 @@ export default function CatalogClient({ products, categories, initialCategory = 
             ))}
           </select>
 
-          {/* Sort */}
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
@@ -113,7 +132,6 @@ export default function CatalogClient({ products, categories, initialCategory = 
             ))}
           </select>
 
-          {/* In stock */}
           <label className="flex items-center gap-2 text-sm text-gray-600 cursor-pointer">
             <input
               type="checkbox"
@@ -139,7 +157,10 @@ export default function CatalogClient({ products, categories, initialCategory = 
       ) : (
         <div className="text-center py-20 text-gray-400">
           <p className="text-lg">Украшений не найдено</p>
-          <button onClick={() => { setCategory(''); setMetal(''); setInStockOnly(false); setSort('default') }} className="mt-4 text-gold hover:underline text-sm">
+          <button
+            onClick={() => { setCategory(''); setMetal(''); setInStockOnly(false); setSort('default') }}
+            className="mt-4 text-gold hover:underline text-sm"
+          >
             Сбросить фильтры
           </button>
         </div>
