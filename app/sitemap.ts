@@ -18,7 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   }))
 
   const productPages: MetadataRoute.Sitemap = products.map((p) => ({
-    url: `${BASE}/catalog/${p.category}/${p.slug}`,
+    url: `${BASE}/p/${p.slug}`,
     priority: 0.7,
     changeFrequency: 'weekly' as const,
   }))

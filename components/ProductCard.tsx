@@ -15,7 +15,7 @@ export default function ProductCard({ product }: { product: Product }) {
   return (
     <div className="group relative bg-white border border-gray-100 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
       {/* Image */}
-      <Link href={`/catalog/${product.category}/${product.slug}`}>
+      <Link href={`/p/${product.slug}`}>
         <div className="relative aspect-square bg-gray-50 overflow-hidden">
           <Image
             src={product.images[0]}
@@ -51,7 +51,7 @@ export default function ProductCard({ product }: { product: Product }) {
 
       {/* Info */}
       <div className="p-3">
-        <Link href={`/catalog/${product.category}/${product.slug}`}>
+        <Link href={`/p/${product.slug}`}>
           <p className="text-sm text-gray-800 font-medium leading-snug hover:text-gold transition-colors line-clamp-2">
             {product.name}
           </p>
