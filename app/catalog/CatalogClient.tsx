@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { ChevronRight } from 'lucide-react'
@@ -23,34 +23,19 @@ const SORT_OPTIONS = [
 interface Props {
   products: Product[]
   categories: Category[]
-  initialCategory?: string
 }
 
-export default function CatalogClient({ products, categories, initialCategory = '' }: Props) {
+export default function CatalogClient({ products, categories }: Props) {
   const pathname = usePathname()
-
-  // Читаем категорию из URL — всегда актуально при любой навигации
-  const categoryFromUrl = (() => {
-    const parts = pathname.split('/')
-    // /catalog/rings → parts = ['', 'catalog', 'rings']
-    if (parts.length >= 3 && parts[1] === 'catalog' && parts[2]) {
-      return parts[2]
-    }
-    return ''
-  })()
-
-  const [category, setCategory] = useState(categoryFromUrl || initialCategory)
   const [metal, setMetal] = useState('')
   const [sort, setSort] = useState('default')
   const [inStockOnly, setInStockOnly] = useState(false)
 
-  // Синхронизируем категорию при смене URL (навигация между страницами)
-  useEffect(() => {
-    setCategory(categoryFromUrl || initialCategory)
-    setMetal('')
-    setSort('default')
-    setInStockOnly(false)
-  }, [pathname]) // eslint-disable-line react-hooks/exhaustive-deps
+  // Категория всегда берётся из URL — единственный источник истины
+  const parts = pathname.split('/')
+  const category = parts[1] === 'catalog' && parts[2] ? parts[2] : ''
+
+  const currentCategory = category ? categories.find((c) => c.slug === category) : null
 
   const filtered = useMemo(() => {
     let list = [...products]
@@ -62,8 +47,6 @@ export default function CatalogClient({ products, categories, initialCategory = 
     else if (sort === 'new') list = list.filter((p) => p.isNew).concat(list.filter((p) => !p.isNew))
     return list
   }, [products, category, metal, sort, inStockOnly])
-
-  const currentCategory = category ? categories.find((c) => c.slug === category) : null
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -88,26 +71,26 @@ export default function CatalogClient({ products, categories, initialCategory = 
 
       {/* Filters */}
       <div className="flex flex-wrap gap-3 mb-8">
-        {/* Category pills */}
+        {/* Category pills — теперь ссылки, меняют URL */}
         <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setCategory('')}
+          <Link
+            href="/catalog"
             className={`px-4 py-1.5 rounded-full text-sm border transition-colors ${
-              category === '' ? 'border-gold text-gold' : 'border-gray-200 text-gray-600 hover:border-gold hover:text-gold'
+              category === '' ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-gray-200 text-gray-600 hover:border-[#C9A84C] hover:text-[#C9A84C]'
             }`}
           >
             Все
-          </button>
+          </Link>
           {categories.map((cat) => (
-            <button
+            <Link
               key={cat.slug}
-              onClick={() => setCategory(cat.slug)}
+              href={`/catalog/${cat.slug}`}
               className={`px-4 py-1.5 rounded-full text-sm border transition-colors ${
-                category === cat.slug ? 'border-gold text-gold' : 'border-gray-200 text-gray-600 hover:border-gold hover:text-gold'
+                category === cat.slug ? 'border-[#C9A84C] text-[#C9A84C]' : 'border-gray-200 text-gray-600 hover:border-[#C9A84C] hover:text-[#C9A84C]'
               }`}
             >
               {cat.name}
-            </button>
+            </Link>
           ))}
         </div>
 
@@ -115,7 +98,7 @@ export default function CatalogClient({ products, categories, initialCategory = 
           <select
             value={metal}
             onChange={(e) => setMetal(e.target.value)}
-            className="text-sm border border-gray-200 rounded px-3 py-1.5 focus:outline-none focus:border-gold"
+            className="text-sm border border-gray-200 rounded px-3 py-1.5 focus:outline-none focus:border-[#C9A84C]"
           >
             {METALS.map((m) => (
               <option key={m.value} value={m.value}>{m.label}</option>
@@ -125,7 +108,7 @@ export default function CatalogClient({ products, categories, initialCategory = 
           <select
             value={sort}
             onChange={(e) => setSort(e.target.value)}
-            className="text-sm border border-gray-200 rounded px-3 py-1.5 focus:outline-none focus:border-gold"
+            className="text-sm border border-gray-200 rounded px-3 py-1.5 focus:outline-none focus:border-[#C9A84C]"
           >
             {SORT_OPTIONS.map((s) => (
               <option key={s.value} value={s.value}>{s.label}</option>
@@ -137,7 +120,7 @@ export default function CatalogClient({ products, categories, initialCategory = 
               type="checkbox"
               checked={inStockOnly}
               onChange={(e) => setInStockOnly(e.target.checked)}
-              className="accent-gold"
+              className="accent-[#C9A84C]"
             />
             В наличии
           </label>
@@ -157,12 +140,9 @@ export default function CatalogClient({ products, categories, initialCategory = 
       ) : (
         <div className="text-center py-20 text-gray-400">
           <p className="text-lg">Украшений не найдено</p>
-          <button
-            onClick={() => { setCategory(''); setMetal(''); setInStockOnly(false); setSort('default') }}
-            className="mt-4 text-gold hover:underline text-sm"
-          >
+          <Link href="/catalog" className="mt-4 inline-block text-[#C9A84C] hover:underline text-sm">
             Сбросить фильтры
-          </button>
+          </Link>
         </div>
       )}
     </div>
