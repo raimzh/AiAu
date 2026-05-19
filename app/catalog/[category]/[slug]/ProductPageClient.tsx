@@ -23,7 +23,7 @@ export default function ProductPageClient({ product, category, related, whatsapp
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
   const [sizeWarning, setSizeWarning] = useState(false)
 
-  const productUrl = typeof window !== 'undefined' ? window.location.href : `https://aiau.kz/catalog/${product.category}/${product.slug}`
+  const productUrl = `https://aiau.kz/catalog/${product.category}/${product.slug}`
 
   const waMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать:\n*${product.name}*\nАртикул: ${product.id}${selectedSize ? `\nРазмер: ${selectedSize}` : ''}\n${productUrl}`
