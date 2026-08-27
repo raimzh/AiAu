@@ -31,7 +31,7 @@ export default function Footer() {
                 ['Колье и цепи', '/catalog/necklaces'],
                 ['Шармы', '/catalog/charms'],
                 ['Все украшения', '/catalog'],
-                ['Размер кольца', '/size-guide'],
+                ['Размеры украшений', '/size-guide'],
               ].map(([label, href]) => (
                 <Link key={href} href={href} className="text-sm text-gray-400 hover:text-gold transition-colors">
                   {label}

@@ -18,6 +18,12 @@ interface Props {
   whatsapp: string
 }
 
+const SIZE_GUIDE = {
+  rings: { href: '/size-guide#rings', label: 'Как узнать размер?' },
+  bracelets: { href: '/size-guide#bracelets', label: 'Как выбрать длину?' },
+  necklaces: { href: '/size-guide#chains', label: 'Как выбрать длину?' },
+} as const
+
 export default function ProductPageClient({ product, category, related, whatsapp }: Props) {
   const { toggle, has } = useWishlist()
   const wishlisted = has(product.id)
@@ -25,6 +31,7 @@ export default function ProductPageClient({ product, category, related, whatsapp
   const [sizeWarning, setSizeWarning] = useState(false)
 
   const productUrl = absoluteUrl(`/p/${product.slug}`)
+  const sizeGuide = category ? SIZE_GUIDE[category.slug as keyof typeof SIZE_GUIDE] : undefined
 
   const waMessage = encodeURIComponent(
     `Здравствуйте! Хочу заказать:\n*${product.name}*\nАртикул: ${product.id}${selectedSize ? `\nРазмер: ${selectedSize}` : ''}\n${productUrl}`
@@ -104,9 +111,9 @@ export default function ProductPageClient({ product, category, related, whatsapp
                   Размер{selectedSize ? `: ${selectedSize}` : ' — выберите'}
                   {sizeWarning && <span className="ml-2 font-normal">← пожалуйста, выберите размер</span>}
                 </p>
-                {category?.slug === 'rings' && (
-                  <Link href="/size-guide" className="text-sm text-gold-ink hover:underline">
-                    Как узнать размер?
+                {sizeGuide && (
+                  <Link href={sizeGuide.href} className="text-sm text-gold-ink hover:underline">
+                    {sizeGuide.label}
                   </Link>
                 )}
               </div>
