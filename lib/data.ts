@@ -1,10 +1,12 @@
 import productsData from '@/data/products.json'
 import categoriesData from '@/data/categories.json'
 import settingsData from '@/data/settings.json'
-import type { Product, Category, SiteSettings } from '@/types'
+import deliveryData from '@/data/delivery.json'
+import type { Product, Category, SiteSettings, DeliveryContent } from '@/types'
 
 export const products = productsData as Product[]
 export const settings = settingsData as SiteSettings
+export const delivery = deliveryData as DeliveryContent
 
 // count вычисляется из реальных данных, а не берётся из JSON
 export const categories: Category[] = (categoriesData as Category[]).map((cat) => ({

@@ -170,6 +170,13 @@ export default function ProductPageClient({ product, category, related, whatsapp
             </button>
           </div>
 
+          <p className="-mt-4 mb-8 text-sm text-gray-500">
+            Доставка по Казахстану, оплата при получении, обмен {' '}
+            <Link href="/delivery" className="text-gold-ink hover:underline">
+              в течение 14 дней
+            </Link>
+          </p>
+
           {/* Meta */}
           <div className="border-t border-gray-100 pt-6 space-y-2 text-sm text-gray-600">
             <p><span className="text-gray-500">Металл:</span> {product.metalLabel}</p>

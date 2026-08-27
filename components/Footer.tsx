@@ -32,6 +32,7 @@ export default function Footer() {
                 ['Шармы', '/catalog/charms'],
                 ['Все украшения', '/catalog'],
                 ['Размеры украшений', '/size-guide'],
+                ['Доставка и оплата', '/delivery'],
               ].map(([label, href]) => (
                 <Link key={href} href={href} className="text-sm text-gray-400 hover:text-gold transition-colors">
                   {label}

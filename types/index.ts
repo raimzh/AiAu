@@ -28,6 +28,30 @@ export interface Category {
   count: number
 }
 
+export interface DeliveryOption {
+  id: string
+  icon: string
+  title: string
+  description: string
+  /** Пусто — на странице появится «уточним при заказе» вместо цены */
+  price: string
+  /** Пусто — на странице появится «уточним при заказе» вместо срока */
+  time: string
+}
+
+export interface PaymentMethod {
+  id: string
+  icon: string
+  title: string
+  description: string
+}
+
+export interface DeliveryContent {
+  options: DeliveryOption[]
+  payment: PaymentMethod[]
+  faq: { question: string; answer: string }[]
+}
+
 export interface SiteSettings {
   siteName: string
   siteNameSub: string
