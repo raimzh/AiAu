@@ -4,6 +4,7 @@ import { products } from '@/lib/data'
 
 export const metadata: Metadata = {
   title: 'Избранное',
+  robots: { index: false, follow: true },
 }
 
 export default function WishlistPage() {

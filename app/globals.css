@@ -11,6 +11,7 @@
   --font-mono: var(--font-geist-mono);
   --font-heading: var(--font-heading);
   --color-gold: var(--gold);
+  --color-gold-ink: var(--gold-ink);
   --color-gold-light: var(--gold-light);
   --color-gold-dark: var(--gold-dark);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -63,9 +64,10 @@
   --input: oklch(0.92 0 0);
   --ring: oklch(0.72 0.12 80);
   --radius: 0.5rem;
-  --gold: #C9A84C;
+  --gold: #C9A84C;          /* декоративное золото: фоны, бордюры, текст на тёмном */
   --gold-light: #E8D5A3;
-  --gold-dark: #9A7A2E;
+  --gold-dark: #6E5619;     /* иконки на gold-light — 4.8:1 */
+  --gold-ink: #846822;      /* золотой ТЕКСТ на светлом фоне — 5.3:1 (WCAG AA) */
   --sidebar: oklch(0.985 0 0);
   --sidebar-foreground: oklch(0.145 0 0);
   --sidebar-primary: oklch(0.205 0 0);
@@ -93,6 +95,10 @@
 
 @layer utilities {
   .text-gold { color: var(--gold); }
+  .text-gold-ink { color: var(--gold-ink); }
+  .hover\:text-gold-ink:hover { color: var(--gold-ink); }
+  .border-gold-ink { border-color: var(--gold-ink); }
+  .hover\:border-gold-ink:hover { border-color: var(--gold-ink); }
   .bg-gold { background-color: var(--gold); }
   .border-gold { border-color: var(--gold); }
   .hover\:text-gold:hover { color: var(--gold); }

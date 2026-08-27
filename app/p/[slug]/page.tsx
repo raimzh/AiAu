@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import { products, categories, settings } from '@/lib/data'
-import ProductPageClient from '@/app/catalog/[category]/[slug]/ProductPageClient'
+import { breadcrumbsJsonLd, productJsonLd } from '@/lib/seo'
+import JsonLd from '@/components/JsonLd'
+import ProductPageClient from '@/components/ProductPageClient'
 
 interface Props {
   params: Promise<{ slug: string }>
@@ -15,10 +17,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const product = products.find((p) => p.slug === slug)
   if (!product) return {}
+  const price = product.price.toLocaleString('ru-KZ') + ' ₸'
   return {
     title: product.name,
-    description: product.description,
-    openGraph: { images: product.images },
+    description: `${product.name} — ${product.metalLabel}, ${product.colorLabel}. ${price}. ${product.description}`.slice(0, 300),
+    alternates: { canonical: `/p/${product.slug}` },
+    openGraph: {
+      type: 'website',
+      title: `${product.name} — ${price}`,
+      description: product.description,
+      url: `/p/${product.slug}`,
+      images: product.images,
+    },
   }
 }
 
@@ -33,11 +43,22 @@ export default async function ProductPage({ params }: Props) {
     .slice(0, 4)
 
   return (
-    <ProductPageClient
-      product={product}
-      category={cat}
-      related={related}
-      whatsapp={settings.whatsapp}
-    />
+    <>
+      <JsonLd data={productJsonLd(product)} />
+      <JsonLd
+        data={breadcrumbsJsonLd([
+          { name: 'Главная', path: '/' },
+          { name: 'Каталог', path: '/catalog' },
+          ...(cat ? [{ name: cat.name, path: `/catalog/${cat.slug}` }] : []),
+          { name: product.name, path: `/p/${product.slug}` },
+        ])}
+      />
+      <ProductPageClient
+        product={product}
+        category={cat}
+        related={related}
+        whatsapp={settings.whatsapp}
+      />
+    </>
   )
 }

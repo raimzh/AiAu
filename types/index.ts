@@ -39,4 +39,11 @@ export interface SiteSettings {
   workingHours: string
   instagram: string
   whatsappMessage: string
+  city: string
+  street: string
+  country: string
+  /** Часы работы в формате Schema.org, напр. «Mo-Su 09:00-20:00» */
+  openingHoursSchema: string
+  /** Срок возврата в днях — попадает в разметку товара */
+  returnDays: number
 }

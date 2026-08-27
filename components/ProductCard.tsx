@@ -31,7 +31,7 @@ export default function ProductCard({ product }: { product: Product }) {
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">
             {product.isNew && <Badge className="bg-gray-900 text-white text-[10px]">Новинка</Badge>}
-            {product.isSale && <Badge className="text-white text-[10px]" style={{ backgroundColor: 'var(--gold)' }}>Скидка</Badge>}
+            {product.isSale && <Badge className="text-gray-900 text-[10px]" style={{ backgroundColor: 'var(--gold)' }}>Скидка</Badge>}
             {!product.inStock && <Badge className="text-[10px] bg-white text-gray-600 border border-gray-200">Нет в наличии</Badge>}
           </div>
         </div>
@@ -40,27 +40,28 @@ export default function ProductCard({ product }: { product: Product }) {
       {/* Wishlist button */}
       <button
         onClick={() => toggle(product.id)}
-        className="absolute top-2 right-2 p-2.5 bg-white rounded-full shadow-sm hover:shadow-md transition-shadow"
+        className="absolute top-2 right-2 flex size-11 items-center justify-center rounded-full bg-white shadow-sm transition-shadow hover:shadow-md"
+        aria-pressed={wishlisted}
         aria-label={wishlisted ? 'Удалить из избранного' : 'Добавить в избранное'}
       >
         <Heart
           size={16}
-          className={wishlisted ? 'fill-current text-red-500' : 'text-gray-400'}
+          className={wishlisted ? 'fill-current text-red-500' : 'text-gray-500'}
         />
       </button>
 
       {/* Info */}
       <div className="p-3">
         <Link href={`/p/${product.slug}`}>
-          <p className="text-sm text-gray-800 font-medium leading-snug hover:text-gold transition-colors line-clamp-2">
+          <p className="text-sm text-gray-800 font-medium leading-snug hover:text-gold-ink transition-colors line-clamp-2">
             {product.name}
           </p>
         </Link>
-        <p className="text-[11px] text-gray-400 mt-1">{product.metalLabel} · {product.colorLabel}</p>
+        <p className="text-[11px] text-gray-500 mt-1">{product.metalLabel} · {product.colorLabel}</p>
         <div className="flex items-center gap-2 mt-2">
           <span className="font-semibold text-gray-900">{formatPrice(product.price)}</span>
           {product.oldPrice && (
-            <span className="text-xs text-gray-400 line-through">{formatPrice(product.oldPrice)}</span>
+            <span className="text-xs text-gray-500 line-through">{formatPrice(product.oldPrice)}</span>
           )}
         </div>
       </div>

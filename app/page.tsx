@@ -2,6 +2,12 @@ import Link from 'next/link'
 import { ArrowRight, Shield, Truck, Award, Phone } from 'lucide-react'
 import { categories, getFeaturedProducts, settings } from '@/lib/data'
 import ProductCard from '@/components/ProductCard'
+import { plural, JEWELLERY } from '@/lib/plural'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  alternates: { canonical: '/' },
+}
 
 export default function HomePage() {
   const featured = getFeaturedProducts().slice(0, 8)
@@ -22,8 +28,7 @@ export default function HomePage() {
             Ювелирные украшения
           </p>
           <h1
-            className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
-            style={{ fontFamily: 'Georgia, serif' }}
+            className="text-4xl md:text-6xl font-bold mb-6 leading-tight font-heading"
           >
             Золото,
             <br />
@@ -37,7 +42,7 @@ export default function HomePage() {
             <Link
               href="/catalog"
               className="inline-flex items-center gap-2 px-8 py-3 rounded font-medium text-gray-900 transition-opacity hover:opacity-90"
-              style={{ backgroundColor: '#C9A84C' }}
+              style={{ backgroundColor: 'var(--gold)' }}
             >
               Смотреть каталог <ArrowRight size={16} />
             </Link>
@@ -55,7 +60,7 @@ export default function HomePage() {
 
       {/* Categories */}
       <section className="max-w-7xl mx-auto px-4 py-16">
-        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center" style={{ fontFamily: 'Georgia, serif' }}>
+        <h2 className="text-2xl font-bold text-gray-900 mb-8 text-center font-heading">
           Категории
         </h2>
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
@@ -63,7 +68,7 @@ export default function HomePage() {
             <Link
               key={cat.slug}
               href={`/catalog/${cat.slug}`}
-              className="group flex flex-col items-center gap-3 p-4 border border-gray-100 rounded-lg hover:border-[#C9A84C] hover:shadow-sm transition-all text-center"
+              className="group flex flex-col items-center gap-3 p-4 border border-gray-100 rounded-lg hover:border-gold hover:shadow-sm transition-all text-center"
             >
               <div className="w-16 h-16 rounded-full bg-gray-50 flex items-center justify-center text-2xl">
                 {cat.slug === 'rings' && '💍'}
@@ -73,8 +78,8 @@ export default function HomePage() {
                 {cat.slug === 'charms' && '🌟'}
               </div>
               <div>
-                <p className="text-sm font-medium text-gray-800 group-hover:text-[#C9A84C] transition-colors">{cat.name}</p>
-                <p className="text-xs text-gray-400">{cat.count} украшений</p>
+                <p className="text-sm font-medium text-gray-800 group-hover:text-gold-ink transition-colors">{cat.name}</p>
+                <p className="text-xs text-gray-500">{cat.count} {plural(cat.count, JEWELLERY)}</p>
               </div>
             </Link>
           ))}
@@ -84,10 +89,10 @@ export default function HomePage() {
       {/* Featured products */}
       <section className="max-w-7xl mx-auto px-4 pb-16">
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-2xl font-bold text-gray-900" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="text-2xl font-bold text-gray-900 font-heading">
             Хиты продаж
           </h2>
-          <Link href="/catalog" className="text-sm hover:underline flex items-center gap-1" style={{ color: '#C9A84C' }}>
+          <Link href="/catalog" className="text-sm text-gold-ink hover:underline flex items-center gap-1">
             Все украшения <ArrowRight size={14} />
           </Link>
         </div>
@@ -104,21 +109,21 @@ export default function HomePage() {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-8 text-center">
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E8D5A3' }}>
-                <Award size={22} style={{ color: '#9A7A2E' }} />
+                <Award size={22} style={{ color: 'var(--gold-dark)' }} />
               </div>
               <p className="font-semibold text-gray-900">Гарантия качества</p>
               <p className="text-sm text-gray-500">Только сертифицированные украшения с подтверждёнными пробами</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E8D5A3' }}>
-                <Truck size={22} style={{ color: '#9A7A2E' }} />
+                <Truck size={22} style={{ color: 'var(--gold-dark)' }} />
               </div>
               <p className="font-semibold text-gray-900">Доставка по Казахстану</p>
               <p className="text-sm text-gray-500">Отправляем курьером в любой город. Упаковка — подарочная коробка</p>
             </div>
             <div className="flex flex-col items-center gap-3">
               <div className="w-12 h-12 rounded-full flex items-center justify-center" style={{ backgroundColor: '#E8D5A3' }}>
-                <Shield size={22} style={{ color: '#9A7A2E' }} />
+                <Shield size={22} style={{ color: 'var(--gold-dark)' }} />
               </div>
               <p className="font-semibold text-gray-900">Безопасная покупка</p>
               <p className="text-sm text-gray-500">Оплата при получении. Возврат в течение 14 дней при сохранении вида</p>
@@ -129,7 +134,7 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="max-w-7xl mx-auto px-4 py-16 text-center">
-        <h2 className="text-2xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+        <h2 className="text-2xl font-bold text-gray-900 mb-3 font-heading">
           Не нашли нужное украшение?
         </h2>
         <p className="text-gray-500 mb-6 text-sm">Напишите нам — подберём вариант под ваш запрос и бюджет</p>
@@ -137,8 +142,8 @@ export default function HomePage() {
           href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-8 py-3 rounded font-medium text-white transition-opacity hover:opacity-90"
-          style={{ backgroundColor: '#C9A84C' }}
+          className="inline-flex items-center gap-2 px-8 py-3 rounded font-medium text-gray-900 transition-opacity hover:opacity-90"
+          style={{ backgroundColor: 'var(--gold)' }}
         >
           Написать в WhatsApp
         </a>

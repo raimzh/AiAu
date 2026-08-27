@@ -8,5 +8,10 @@
   "address": "г. Алматы, ул. Б.Момышулы, 40",
   "workingHours": "Пн–Вс: 9:00–20:00",
   "instagram": "https://instagram.com/aiau.kz",
-  "whatsappMessage": "Здравствуйте! Хочу заказать украшение"
+  "whatsappMessage": "Здравствуйте! Хочу заказать украшение",
+  "city": "Алматы",
+  "street": "ул. Б.Момышулы, 40",
+  "country": "KZ",
+  "openingHoursSchema": "Mo-Su 09:00-20:00",
+  "returnDays": 14
 }

@@ -2,16 +2,19 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, Award, Truck, Heart } from 'lucide-react'
 import { settings } from '@/lib/data'
+import { OG_IMAGE } from '@/lib/seo'
 
 export const metadata: Metadata = {
   title: 'О нас',
   description: 'Ювелирный магазин золотых украшений в Казахстане',
+  alternates: { canonical: '/about' },
+  openGraph: { title: 'О нас', description: 'Ювелирный магазин золотых украшений в Казахстане', url: '/about', images: [OG_IMAGE] },
 }
 
 export default function AboutPage() {
   return (
     <div className="max-w-4xl mx-auto px-4 py-14">
-      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+      <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 font-heading">
         О нас
       </h1>
       <p className="text-gray-500 text-lg mb-12 max-w-2xl">
@@ -22,22 +25,22 @@ export default function AboutPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-14">
         {[
           {
-            icon: <Award size={24} style={{ color: '#9A7A2E' }} />,
+            icon: <Award size={24} style={{ color: 'var(--gold-dark)' }} />,
             title: 'Сертифицированное золото',
             text: 'Все украшения выполнены из золота 585 и 750 пробы с государственным клеймом.',
           },
           {
-            icon: <Shield size={24} style={{ color: '#9A7A2E' }} />,
+            icon: <Shield size={24} style={{ color: 'var(--gold-dark)' }} />,
             title: 'Гарантия и возврат',
             text: 'Мы даём гарантию на каждое украшение. Возврат в течение 14 дней при сохранении товарного вида.',
           },
           {
-            icon: <Truck size={24} style={{ color: '#9A7A2E' }} />,
+            icon: <Truck size={24} style={{ color: 'var(--gold-dark)' }} />,
             title: 'Доставка по Казахстану',
             text: 'Отправляем в любой город курьером или почтой. Украшение упаковано в фирменную подарочную коробку.',
           },
           {
-            icon: <Heart size={24} style={{ color: '#9A7A2E' }} />,
+            icon: <Heart size={24} style={{ color: 'var(--gold-dark)' }} />,
             title: 'Индивидуальный подход',
             text: 'Помогаем выбрать украшение под конкретный запрос. Консультация — в WhatsApp, быстро и без давления.',
           },
@@ -55,7 +58,7 @@ export default function AboutPage() {
       </div>
 
       <div className="bg-gray-50 rounded-lg p-8 text-center">
-        <h2 className="text-xl font-bold text-gray-900 mb-3" style={{ fontFamily: 'Georgia, serif' }}>
+        <h2 className="text-xl font-bold text-gray-900 mb-3 font-heading">
           Есть вопросы?
         </h2>
         <p className="text-gray-500 text-sm mb-6">
@@ -66,12 +69,12 @@ export default function AboutPage() {
             href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="px-6 py-2.5 rounded font-medium text-white transition-opacity hover:opacity-90"
-            style={{ backgroundColor: '#C9A84C' }}
+            className="inline-flex items-center justify-center min-h-11 px-6 rounded font-medium text-gray-900 transition-opacity hover:opacity-90"
+            style={{ backgroundColor: 'var(--gold)' }}
           >
             WhatsApp
           </a>
-          <Link href="/contacts" className="px-6 py-2.5 rounded font-medium border border-gray-200 text-gray-700 hover:border-[#C9A84C] transition-colors">
+          <Link href="/contacts" className="inline-flex items-center justify-center min-h-11 px-6 rounded font-medium border border-gray-200 text-gray-700 hover:border-gold-ink transition-colors">
             Контакты
           </Link>
         </div>

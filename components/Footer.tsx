@@ -10,7 +10,7 @@ export default function Footer() {
           {/* Brand */}
           <div>
             <div className="mb-4">
-              <p className="text-xl font-bold tracking-widest text-white" style={{ fontFamily: 'Georgia, serif' }}>
+              <p className="text-xl font-bold tracking-widest text-white font-heading">
                 {settings.siteName}
               </p>
               <p className="text-[10px] tracking-[0.3em] uppercase" style={{ color: 'var(--gold)' }}>
@@ -60,7 +60,7 @@ export default function Footer() {
                 href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 rounded text-white text-sm font-medium mt-2"
+                className="inline-flex items-center gap-2 px-4 py-2 rounded text-gray-900 text-sm font-medium mt-2"
                 style={{ backgroundColor: 'var(--gold)' }}
               >
                 Написать в WhatsApp
@@ -69,7 +69,7 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-xs text-gray-500">
+        <div className="border-t border-gray-800 mt-10 pt-6 text-center text-xs text-gray-400">
           © {new Date().getFullYear()} {settings.siteName}. Все права защищены.
         </div>
       </div>
