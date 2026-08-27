@@ -1,6 +1,6 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { products, categories, settings } from '@/lib/data'
+import { products, categories } from '@/lib/data'
 import { breadcrumbsJsonLd, productJsonLd } from '@/lib/seo'
 import JsonLd from '@/components/JsonLd'
 import ProductPageClient from '@/components/ProductPageClient'
@@ -53,12 +53,7 @@ export default async function ProductPage({ params }: Props) {
           { name: product.name, path: `/p/${product.slug}` },
         ])}
       />
-      <ProductPageClient
-        product={product}
-        category={cat}
-        related={related}
-        whatsapp={settings.whatsapp}
-      />
+      <ProductPageClient product={product} category={cat} related={related} />
     </>
   )
 }

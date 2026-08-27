@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge'
 import { useWishlist } from '@/components/WishlistProvider'
 import ProductCard from '@/components/ProductCard'
 import ProductGallery from '@/components/ProductGallery'
+import WhatsAppLink from '@/components/WhatsAppLink'
 import { formatPrice } from '@/lib/data'
 import { absoluteUrl } from '@/lib/site'
 import type { Product, Category } from '@/types'
@@ -15,7 +16,6 @@ interface Props {
   product: Product
   category?: Category
   related: Product[]
-  whatsapp: string
 }
 
 const SIZE_GUIDE = {
@@ -24,7 +24,7 @@ const SIZE_GUIDE = {
   necklaces: { href: '/size-guide#chains', label: 'Как выбрать длину?' },
 } as const
 
-export default function ProductPageClient({ product, category, related, whatsapp }: Props) {
+export default function ProductPageClient({ product, category, related }: Props) {
   const { toggle, has } = useWishlist()
   const wishlisted = has(product.id)
   const [selectedSize, setSelectedSize] = useState<string | null>(null)
@@ -33,9 +33,8 @@ export default function ProductPageClient({ product, category, related, whatsapp
   const productUrl = absoluteUrl(`/p/${product.slug}`)
   const sizeGuide = category ? SIZE_GUIDE[category.slug as keyof typeof SIZE_GUIDE] : undefined
 
-  const waMessage = encodeURIComponent(
-    `Здравствуйте! Хочу заказать:\n*${product.name}*\nАртикул: ${product.id}${selectedSize ? `\nРазмер: ${selectedSize}` : ''}\n${productUrl}`
-  )
+  // Кодирование берёт на себя WhatsAppLink
+  const orderMessage = `Здравствуйте! Хочу заказать:\n*${product.name}*\nАртикул: ${product.id}${selectedSize ? `\nРазмер: ${selectedSize}` : ''}\n${productUrl}`
 
   const handleOrder = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (product.sizes.length > 0 && !selectedSize) {
@@ -141,17 +140,17 @@ export default function ProductPageClient({ product, category, related, whatsapp
           {/* Actions */}
           <div className="flex gap-3 mb-8">
             {product.inStock ? (
-              <a
-                href={`https://wa.me/${whatsapp}?text=${waMessage}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <WhatsAppLink
+                message={orderMessage}
+                goal="whatsapp_order"
+                source={`product:${product.id}`}
                 onClick={handleOrder}
                 className="flex-1 flex items-center justify-center gap-2 min-h-12 py-3 rounded text-gray-900 font-medium transition-opacity hover:opacity-90"
                 style={{ backgroundColor: 'var(--gold)' }}
               >
                 <MessageCircle size={18} />
                 Заказать через WhatsApp
-              </a>
+              </WhatsAppLink>
             ) : (
               <span className="flex-1 flex items-center justify-center gap-2 py-3 rounded text-white font-medium cursor-not-allowed bg-gray-300">
                 <MessageCircle size={18} />

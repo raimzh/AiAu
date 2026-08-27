@@ -1,10 +1,10 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Ruler, Scissors, MessageCircle, Info } from 'lucide-react'
-import { settings } from '@/lib/data'
 import { RING_SIZES } from '@/lib/ring-sizes'
 import { breadcrumbsJsonLd, OG_IMAGE } from '@/lib/seo'
 import JsonLd from '@/components/JsonLd'
+import WhatsAppLink from '@/components/WhatsAppLink'
 import SizeCalculator from './SizeCalculator'
 
 const TITLE = 'Размеры украшений'
@@ -53,10 +53,6 @@ const CHAIN_LENGTHS = [
 ]
 
 export default function SizeGuidePage() {
-  const waLink = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(
-    'Здравствуйте! Помогите определить размер украшения'
-  )}`
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <JsonLd
@@ -286,16 +282,15 @@ export default function SizeGuidePage() {
           не подойдёт
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="size-guide"
+            message="Здравствуйте! Помогите определить размер украшения"
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded px-6 font-medium text-gray-900 transition-opacity hover:opacity-90"
             style={{ backgroundColor: 'var(--gold)' }}
           >
             <MessageCircle size={18} />
             Спросить в WhatsApp
-          </a>
+          </WhatsAppLink>
           <Link
             href="/catalog"
             className="inline-flex min-h-11 items-center justify-center rounded border border-gray-200 px-6 font-medium text-gray-700 transition-colors hover:border-gold-ink"

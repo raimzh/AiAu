@@ -8,6 +8,7 @@ import { settings, products } from '@/lib/data'
 import { SITE_URL } from '@/lib/site'
 import { storeJsonLd } from '@/lib/seo'
 import JsonLd from '@/components/JsonLd'
+import Analytics from '@/components/Analytics'
 
 const inter = Inter({
   variable: '--font-sans',
@@ -49,6 +50,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">{children}</main>
           <Footer />
         </WishlistProvider>
+        <Analytics />
       </body>
     </html>
   )

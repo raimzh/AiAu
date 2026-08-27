@@ -1,8 +1,8 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { Shield, Award, Truck, Heart } from 'lucide-react'
-import { settings } from '@/lib/data'
 import { OG_IMAGE } from '@/lib/seo'
+import WhatsAppLink from '@/components/WhatsAppLink'
 
 export const metadata: Metadata = {
   title: 'О нас',
@@ -65,15 +65,13 @@ export default function AboutPage() {
           Свяжитесь с нами — ответим на любой вопрос об украшениях, доставке и размерах
         </p>
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <a
-            href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="about"
             className="inline-flex items-center justify-center min-h-11 px-6 rounded font-medium text-gray-900 transition-opacity hover:opacity-90"
             style={{ backgroundColor: 'var(--gold)' }}
           >
             WhatsApp
-          </a>
+          </WhatsAppLink>
           <Link href="/contacts" className="inline-flex items-center justify-center min-h-11 px-6 rounded font-medium border border-gray-200 text-gray-700 hover:border-gold-ink transition-colors">
             Контакты
           </Link>

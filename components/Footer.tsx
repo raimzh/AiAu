@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Phone, Mail, MapPin } from 'lucide-react'
 import { settings } from '@/lib/data'
+import WhatsAppLink from '@/components/WhatsAppLink'
 
 export default function Footer() {
   return (
@@ -58,15 +59,13 @@ export default function Footer() {
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                 Instagram
               </a>
-              <a
-                href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
-                target="_blank"
-                rel="noopener noreferrer"
+              <WhatsAppLink
+                source="footer"
                 className="inline-flex items-center gap-2 px-4 py-2 rounded text-gray-900 text-sm font-medium mt-2"
                 style={{ backgroundColor: 'var(--gold)' }}
               >
                 Написать в WhatsApp
-              </a>
+              </WhatsAppLink>
             </div>
           </div>
         </div>

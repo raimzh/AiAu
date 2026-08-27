@@ -45,6 +45,9 @@ app/
   _fonts/                         — Playfair Display для превью и иконок
 
 components/
+  Analytics.tsx                   — Подключение счётчиков (только если задан ID)
+  RouteTracker.tsx                — Отправка просмотра при переходе между страницами
+  WhatsAppLink.tsx                — Ссылка в WhatsApp с отправкой цели в аналитику
   ProductGallery.tsx              — Галерея товара: свайп, миниатюры, просмотр во весь экран
   Header.tsx                      — Шапка с навигацией и счётчиком избранного
   Footer.tsx                      — Подвал с контактами и ссылками
@@ -64,6 +67,7 @@ lib/
   plural.ts                       — Склонение числительных («1 украшение», «5 украшений»)
   ring-sizes.ts                   — Таблица размеров колец и подбор ближайшего
   og-font.ts                      — Playfair Display для картинок превью
+  analytics.ts                    — Цели и просмотры для Метрики / GA
 
 types/
   index.ts                        — TypeScript-типы (Product, Category, SiteSettings)
@@ -157,6 +161,42 @@ public/
 
 ---
 
+## Аналитика
+
+Счётчики подключаются переменными окружения. Пока они не заданы, на сайте **нет ни одного
+стороннего скрипта и ни одной cookie** — компонент `Analytics` не отдаёт ничего.
+
+| Переменная | Что подключает |
+|---|---|
+| `NEXT_PUBLIC_YANDEX_METRIKA_ID` | Яндекс.Метрика (номер счётчика, только цифры) |
+| `NEXT_PUBLIC_GA_ID` | Google Analytics 4 (`G-XXXXXXXXXX`) |
+| `NEXT_PUBLIC_SITE_URL` | Домен сайта для canonical, sitemap и Schema.org |
+
+Локально — файл `.env.local` (он в `.gitignore`), на Vercel — Settings → Environment Variables:
+
+```
+NEXT_PUBLIC_YANDEX_METRIKA_ID=12345678
+NEXT_PUBLIC_SITE_URL=https://aiau.kz
+```
+
+### Цели
+
+Заказ на сайте оформляется только через WhatsApp, поэтому клик по любой кнопке WhatsApp
+отправляет цель:
+
+| Цель | Когда | Параметр `source` |
+|---|---|---|
+| `whatsapp_order` | Кнопка «Заказать через WhatsApp» на странице товара | `product:<артикул>` |
+| `whatsapp_contact` | Остальные кнопки WhatsApp | `home-hero`, `home-cta`, `footer`, `about`, `contacts`, `delivery`, `size-guide` |
+
+Если размер не выбран, переход отменяется — и цель не засчитывается.
+
+В Метрике цели нужно один раз создать в интерфейсе: Настройки → Цели → JavaScript-событие,
+идентификатор — `whatsapp_order` и `whatsapp_contact`.
+
+Переходы между страницами Метрика сама не видит (App Router меняет URL без перезагрузки) —
+их отправляет `RouteTracker`.
+
 ## Запуск локально
 
 ```bash
@@ -207,6 +247,16 @@ npm run start   # запуск production-сервера
 ---
 
 ## CHANGELOG
+
+### [2026-08-27] — Аналитика
+
+#### Добавлено
+- Яндекс.Метрика и Google Analytics 4 через `NEXT_PUBLIC_YANDEX_METRIKA_ID` / `NEXT_PUBLIC_GA_ID`. Пока переменные не заданы, сторонних скриптов и cookie на сайте нет вообще
+- Цели по кликам в WhatsApp: `whatsapp_order` со страницы товара (с артикулом в параметрах) и `whatsapp_contact` со всех остальных кнопок — до этого конверсия магазина не измерялась ничем
+- Отмена перехода (не выбран размер) цель не засчитывает
+- `RouteTracker` шлёт просмотр при переходе между страницами — в App Router счётчик сам их не видит
+- Все кнопки WhatsApp переведены на общий компонент `WhatsAppLink`, ссылка больше не собирается руками в шести местах
+
 
 ### [2026-08-27] — Страница доставки и оплаты
 

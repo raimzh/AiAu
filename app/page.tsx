@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { ArrowRight, Shield, Truck, Award, Phone } from 'lucide-react'
-import { categories, getFeaturedProducts, settings } from '@/lib/data'
+import { categories, getFeaturedProducts } from '@/lib/data'
 import ProductCard from '@/components/ProductCard'
+import WhatsAppLink from '@/components/WhatsAppLink'
 import { plural, JEWELLERY } from '@/lib/plural'
 import type { Metadata } from 'next'
 
@@ -46,14 +47,12 @@ export default function HomePage() {
             >
               Смотреть каталог <ArrowRight size={16} />
             </Link>
-            <a
-              href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
-              target="_blank"
-              rel="noopener noreferrer"
+            <WhatsAppLink
+              source="home-hero"
               className="inline-flex items-center gap-2 px-8 py-3 rounded font-medium border border-white/30 text-white hover:bg-white/10 transition-colors"
             >
               <Phone size={16} /> Написать нам
-            </a>
+            </WhatsAppLink>
           </div>
         </div>
       </section>
@@ -138,15 +137,13 @@ export default function HomePage() {
           Не нашли нужное украшение?
         </h2>
         <p className="text-gray-500 mb-6 text-sm">Напишите нам — подберём вариант под ваш запрос и бюджет</p>
-        <a
-          href={`https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(settings.whatsappMessage)}`}
-          target="_blank"
-          rel="noopener noreferrer"
+        <WhatsAppLink
+          source="home-cta"
           className="inline-flex items-center gap-2 px-8 py-3 rounded font-medium text-gray-900 transition-opacity hover:opacity-90"
           style={{ backgroundColor: 'var(--gold)' }}
         >
           Написать в WhatsApp
-        </a>
+        </WhatsAppLink>
       </section>
     </>
   )

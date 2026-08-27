@@ -15,6 +15,7 @@ import {
 import { delivery, settings } from '@/lib/data'
 import { breadcrumbsJsonLd, OG_IMAGE } from '@/lib/seo'
 import JsonLd from '@/components/JsonLd'
+import WhatsAppLink from '@/components/WhatsAppLink'
 
 const TITLE = 'Доставка и оплата'
 const DESCRIPTION =
@@ -53,10 +54,6 @@ function Icon({ name }: { name: string }) {
 }
 
 export default function DeliveryPage() {
-  const waLink = `https://wa.me/${settings.whatsapp}?text=${encodeURIComponent(
-    'Здравствуйте! Подскажите по доставке'
-  )}`
-
   return (
     <div className="mx-auto max-w-4xl px-4 py-14">
       <JsonLd
@@ -166,16 +163,15 @@ export default function DeliveryPage() {
           Напишите — посчитаем стоимость доставки в ваш город и назовём срок
         </p>
         <div className="flex flex-col justify-center gap-3 sm:flex-row">
-          <a
-            href={waLink}
-            target="_blank"
-            rel="noopener noreferrer"
+          <WhatsAppLink
+            source="delivery"
+            message="Здравствуйте! Подскажите по доставке"
             className="inline-flex min-h-11 items-center justify-center gap-2 rounded px-6 font-medium text-gray-900 transition-opacity hover:opacity-90"
             style={{ backgroundColor: 'var(--gold)' }}
           >
             <MessageCircle size={18} />
             Спросить в WhatsApp
-          </a>
+          </WhatsAppLink>
           <Link
             href="/catalog"
             className="inline-flex min-h-11 items-center justify-center rounded border border-gray-200 px-6 font-medium text-gray-700 transition-colors hover:border-gold-ink"
