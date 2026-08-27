@@ -99,10 +99,17 @@ export default function ProductPageClient({ product, category, related, whatsapp
           {/* Size selector */}
           {product.sizes.length > 0 && (
             <div className="mb-6">
-              <p className={`text-sm font-medium mb-2 transition-colors ${sizeWarning ? 'text-red-600' : 'text-gray-700'}`}>
-                Размер{selectedSize ? `: ${selectedSize}` : ' — выберите'}
-                {sizeWarning && <span className="ml-2 font-normal">← пожалуйста, выберите размер</span>}
-              </p>
+              <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-4">
+                <p className={`text-sm font-medium transition-colors ${sizeWarning ? 'text-red-600' : 'text-gray-700'}`}>
+                  Размер{selectedSize ? `: ${selectedSize}` : ' — выберите'}
+                  {sizeWarning && <span className="ml-2 font-normal">← пожалуйста, выберите размер</span>}
+                </p>
+                {category?.slug === 'rings' && (
+                  <Link href="/size-guide" className="text-sm text-gold-ink hover:underline">
+                    Как узнать размер?
+                  </Link>
+                )}
+              </div>
               <div className={`flex flex-wrap gap-2 ${sizeWarning ? 'animate-pulse' : ''}`}>
                 {product.sizes.map((size) => (
                   <button
