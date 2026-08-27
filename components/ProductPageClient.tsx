@@ -1,12 +1,12 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Heart, ChevronRight, MessageCircle } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { useWishlist } from '@/components/WishlistProvider'
 import ProductCard from '@/components/ProductCard'
+import ProductGallery from '@/components/ProductGallery'
 import { formatPrice } from '@/lib/data'
 import { absoluteUrl } from '@/lib/site'
 import type { Product, Category } from '@/types'
@@ -56,24 +56,21 @@ export default function ProductPageClient({ product, category, related, whatsapp
       </nav>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
-        {/* Image */}
-        <div className="relative aspect-square bg-gray-50 rounded-lg overflow-hidden">
-          <Image
-            src={product.images[0]}
-            alt={product.name}
-            fill
-            className="object-contain p-4"
-            unoptimized
-            onError={(e) => {
-              const img = e.target as HTMLImageElement
-              img.src = '/images/placeholder.svg'
-            }}
-          />
-          <div className="absolute top-4 left-4 flex flex-col gap-1">
-            {product.isNew && <Badge className="bg-gray-900 text-white">Новинка</Badge>}
-            {product.isSale && <Badge className="text-gray-900" style={{ backgroundColor: 'var(--gold)' }}>Скидка</Badge>}
-          </div>
-        </div>
+        {/* Галерея */}
+        <ProductGallery
+          images={product.images}
+          alt={product.name}
+          badges={
+            <>
+              {product.isNew && <Badge className="bg-gray-900 text-white">Новинка</Badge>}
+              {product.isSale && (
+                <Badge className="text-gray-900" style={{ backgroundColor: 'var(--gold)' }}>
+                  Скидка
+                </Badge>
+              )}
+            </>
+          }
+        />
 
         {/* Details */}
         <div className="flex flex-col">
