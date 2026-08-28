@@ -21,12 +21,12 @@ export default function ProductCard({ product }: { product: Product }) {
             src={product.images[0]}
             alt={product.name}
             fill
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             className="object-contain group-hover:scale-105 transition-transform duration-500 p-2"
             onError={(e) => {
               const img = e.target as HTMLImageElement
               img.src = '/images/placeholder.svg'
             }}
-            unoptimized
           />
           {/* Badges */}
           <div className="absolute top-2 left-2 flex flex-col gap-1">

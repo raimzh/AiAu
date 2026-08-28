@@ -73,7 +73,6 @@ export default function ProductGallery({ images, alt, badges }: Props) {
                 fill
                 sizes="(max-width: 768px) 100vw, 600px"
                 priority={i === 0}
-                unoptimized
                 className="object-contain p-4"
                 onError={handleImageError}
               />
@@ -130,7 +129,6 @@ export default function ProductGallery({ images, alt, badges }: Props) {
                 alt=""
                 fill
                 sizes="80px"
-                unoptimized
                 className="object-contain p-1"
                 onError={handleImageError}
               />
@@ -244,7 +242,6 @@ function Lightbox({ images, alt, index, onIndexChange, onClose }: LightboxProps)
           alt={many ? `${alt} — фото ${index + 1}` : alt}
           fill
           sizes="100vw"
-          unoptimized
           className="object-contain"
           onError={handleImageError}
         />

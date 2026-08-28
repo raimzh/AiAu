@@ -10,7 +10,8 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   images: {
-    unoptimized: true,
+    // Vercel сам отдаёт AVIF/WebP нужного размера — исходные JPEG весят в разы больше
+    formats: ['image/avif', 'image/webp'],
   },
   async redirects() {
     return [
